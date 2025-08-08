@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+type MessageType = "birthday" | "holiday" | "thanks" | "default" | "";
+
 const App = () => {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
-  type MessageType = "birthday" | "holiday" | "thanks" | "default" | "";
-
   const [messageType, setMessageType] = useState<MessageType>("");
 
   useEffect(() => {
@@ -54,8 +54,8 @@ const App = () => {
     },
   };
 
-
   const theme = themes[messageType || "default"];
+
   return (
     <div className={`min-h-screen ${theme.bg} flex items-center justify-center p-4`}>
       <motion.div
@@ -78,7 +78,7 @@ const App = () => {
         {/* Message Type Selector */}
         <select
           value={messageType}
-          onChange={(e) => setMessageType(e.target.value)}
+          onChange={(e) => setMessageType(e.target.value as MessageType)}
           className="w-full px-4 py-2 mb-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
         >
           <option value="">Choose a Message Type</option>
