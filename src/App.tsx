@@ -5,9 +5,10 @@ const App = () => {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
   const [title, setTitle] = useState("");
-  const [messageType, setMessageType] = useState("");
+  type MessageType = "birthday" | "holiday" | "thanks" | "default" | "";
 
-  // Change title when type or recipient changes
+  const [messageType, setMessageType] = useState<MessageType>("");
+
   useEffect(() => {
     if (messageType === "birthday") {
       setTitle(`Happy Birthday ${recipient} 🎉`);
@@ -21,7 +22,12 @@ const App = () => {
   }, [messageType, recipient]);
 
   // Theme colors based on messageType
-  const themes = {
+  const themes: Record<Exclude<MessageType, "">, {
+    bg: string;
+    border: string;
+    card: string;
+    title: string;
+  }> = {
     birthday: {
       bg: "bg-gradient-to-br from-pink-200 via-yellow-100 to-pink-300",
       border: "border-pink-300",
@@ -48,8 +54,8 @@ const App = () => {
     },
   };
 
-  const theme = themes[messageType] || themes.default;
 
+  const theme = themes[messageType || "default"];
   return (
     <div className={`min-h-screen ${theme.bg} flex items-center justify-center p-4`}>
       <motion.div
